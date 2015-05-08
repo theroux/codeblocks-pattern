@@ -1,0 +1,177 @@
+{% extends '@blocks/layouts/main.twig' %}
+
+{% block body_class %}homepage{% endblock %}
+
+{% block featuredcontent %}
+	{% block featuredcontent %}
+	{%
+		set homeZone = api.posts.query({
+			zone: 'Home Page Featured Content Zone'
+			limit: 1
+		})
+
+	%}
+
+	{% for topContent in homeZone.results %}
+		{% set featured_image = topContent.template_data.some_custom_image_field %}
+		{% set featured_content_heading = topContent.template_data.some_custom_title_field %}
+		{% set featured_content_teaser_description = topContent.template_data.some_custom_description_field %}
+		{% set featured_content_permalink = topContent.template_data.some_custom_url_field %}
+
+		{% include '@blocks/modules/featuredcontent.twig' %}
+	{% endfor %}
+
+
+	
+{% endblock featuredcontent %}
+{% endblock featuredcontent %}
+
+{% block main %}
+{#
+	<!-- Features 1 -->
+	{% set zone_home_top = api.zones.getCurrent({ zone_id: 7001, expand_posts: true }) %}
+	{{ prettydump(zone_home_top) }}
+	<div class="wrapper">
+		<div class="container">
+			<div class="row">
+				{% for post in zone_home_top.active.content %}
+				<section class="6u 12u(narrower) feature">
+					<div class="image-wrapper first">
+						<a href="#" class="image featured first">
+							<img src="{{ post.image }}" />
+						</a>
+					</div>
+					<header>
+						<h2>{{ post.title|raw }}</h2>
+					</header>
+					<p>{{ post.contents|regex_replace('~<img[^>]+>~', '')|raw }}</p>
+					<ul class="actions">
+						<li><a href="{{ post.relative_path }}" class="button">Elevate my awareness</a></li>
+					</ul>
+				</section>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+#}
+
+	<!-- Banner -->
+	<div id="banner-wrapper">
+		<div id="banner" class="box container">
+			<div class="row">
+				<div class="7u">
+					<h2>AMP <em>Workshop</em></h2>
+					<p>This is a demo site built on the <strong>AMP Cloud</strong></p>
+				</div>
+				<div class="5u">
+					<ul>
+						<li><a href="#" class="button big icon fa-arrow-circle-right">Ok let's go</a></li>
+						<li><a href="#" class="button alt big icon fa-question-circle">More info</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Features -->
+	<div id="features-wrapper">
+		<div class="container">
+			<div class="row">
+				<div class="4u">
+
+					<!-- Box -->
+					<section class="box feature">
+						<a href="/posts/" class="image featured featured-1">
+							<i class="fa fa-file-text-o"></i>
+						</a>
+						<div class="inner">
+							<header>
+								<h2>Posts</h2>
+								<p>Read some fascinating posts</p>
+							</header>
+							<p>Phasellus quam turpis, feugiat sit amet in, hendrerit in lectus. Praesent sed semper amet bibendum tristique fringilla.</p>
+						</div>
+					</section>
+
+				</div>
+				<div class="4u">
+
+					<!-- Box -->
+					<section class="box feature">
+						<a href="/slideshows/" class="image featured featured-2">
+							<i class="fa fa-picture-o"></i>
+						</a>
+						<div class="inner">
+							<header>
+								<h2>Slideshows</h2>
+								<p>Browse some interesting slideshows</p>
+							</header>
+							<p>Phasellus quam turpis, feugiat sit amet in, hendrerit in lectus. Praesent sed semper amet bibendum tristique fringilla.</p>
+						</div>
+					</section>
+
+				</div>
+				<div class="4u">
+
+					<!-- Box -->
+					<section class="box feature last">
+						<a href="#" class="image featured featured-3">
+							<i class="fa fa-file-text-o"></i>
+						</a>
+						<div class="inner">
+							<header>
+								<h2>Oh, and finally ...</h2>
+								<p>Here's another intriguing subtitle</p>
+							</header>
+							<p>Phasellus quam turpis, feugiat sit amet in, hendrerit in lectus. Praesent sed semper amet bibendum tristique fringilla.</p>
+						</div>
+					</section>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Main -->
+	<div id="main-wrapper">
+		<div class="container">
+			<div class="row">
+				<div class="4u">
+
+					<!-- Sidebar -->
+					<div id="sidebar">
+						<section class="widget thumbnails">
+							<h3>Interesting stuff</h3>
+							<div class="grid">
+								<div class="row no-collapse 50%">
+									<div class="6u"><a href="#" class="image fit"><img src="{{ asset('images/pic04.jpg') }}" alt="" /></a></div>
+									<div class="6u"><a href="#" class="image fit"><img src="{{ asset('images/pic05.jpg') }}" alt="" /></a></div>
+								</div>
+								<div class="row no-collapse 50%">
+									<div class="6u"><a href="#" class="image fit"><img src="{{ asset('images/pic06.jpg') }}" alt="" /></a></div>
+									<div class="6u"><a href="#" class="image fit"><img src="{{ asset('images/pic07.jpg') }}" alt="" /></a></div>
+								</div>
+							</div>
+							<a href="#" class="button icon fa-file-text-o">More</a>
+						</section>
+					</div>
+
+				</div>
+				<div class="8u important(collapse)">
+
+					<!-- Content -->
+					<div id="content">
+						<section class="last">
+							<h2>So what's this all about?</h2>
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quis nunc tellus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam in luctus enim. Etiam lacus nibh, varius non tempor in, molestie vel elit. Maecenas eget nisi efficitur, auctor lacus id, blandit nibh. Nullam non pharetra eros, quis vulputate nisi. Praesent fringilla aliquam sem, vel pharetra massa fermentum ac. Donec malesuada vulputate lectus, vel porttitor ipsum dapibus vel. Maecenas pulvinar tempor mauris quis mattis.</p>
+							<p>Phasellus quam turpis, feugiat sit amet ornare in, hendrerit in lectus. Praesent semper bibendum ipsum, et tristique augue fringilla eu. Vivamus id risus vel dolor auctor euismod quis eget mi. Etiam eu ante risus. Aliquam erat volutpat. Aliquam luctus mattis lectus sit amet phasellus quam turpis.</p>
+							<a href="#" class="button icon fa-arrow-circle-right">Continue Reading</a>
+						</section>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

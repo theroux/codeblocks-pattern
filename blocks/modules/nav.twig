@@ -1,0 +1,14 @@
+<nav id="nav">
+	{% macro navigation(items) %}
+		<ul>
+			{% for nav in items %}
+				<li class="{{ nav.selected and (req.path matches nav.selected) ? 'current' : '' }}">
+					<a class="{{ nav.class }}" href="{{ nav.path }}">{{ __(nav.title) }}</a>
+					{% if nav.children %}{{ _self.navigation(nav.children) }}{% endif %}
+				</li>
+			{% endfor %}
+		</ul>
+	{% endmacro %}
+
+	{{ _self.navigation(vars.navigation) }}
+</nav>

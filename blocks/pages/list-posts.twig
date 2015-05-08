@@ -1,0 +1,100 @@
+{% extends '@blocks/layouts/main.twig' %}
+
+{% block featuredcontent %}
+	{%
+		set categoryZone = api.posts.query({
+			zone: 'Category Page Featured Content Zone'
+			limit: 1
+		})
+
+	%}
+
+	{% for topArticle in categoryZone.results %}
+		{% set featured_image = topArticle.image %}
+		{% set  featured_content_heading = topArticle.title %}
+		{% set featured_content_teaser_description = topArticle.contents}truncate(100) %}
+		{% set  featured_content_permalink = topArticle.url %}
+
+		{% include '@blocks/modules/featuredcontent.twig' %}
+	{% endfor %}
+
+
+	
+{% endblock featuredcontent %}
+
+{% block main %}
+
+	{%
+		set posts = api.posts.query({
+			page: req.params.page|default(1),
+			limit: 3,
+			categories: req.params.category ? [{parent:req.params.category}, req.params.category] : null,
+			categories_match: 'any',
+			tags: req.params.tag ? [req.params.tag] : null
+		})
+	%}
+
+	<div id="banner" class="box container">
+		<div class="row">
+			<div>
+				<h2>Posts</h2>
+				<p>We write with a <strong>passion</strong></p>
+			</div>
+		</div>
+	</div>
+	{% import "@blocks/macros/mv-beacon.twig" as mv_macro %}
+	<!-- Features -->
+	<div id="features-wrapper">
+		<div class="container">
+			<div class="row">
+
+				{% if posts.results is empty %}
+					<strong>No posts found.</strong>
+				{% else %}
+					{% for post in posts.results %}
+						<div class="4u">
+							<!-- Box -->
+							<section class="box feature">
+								<a href="{{ post.relative_path }}" class="image featured">
+									<img src="http://o.aolcdn.com/dims-shared/dims3/GLOB/thumbnail/1000x700/{{ post.image }}" alt="" />
+								</a>
+								<div class="inner">
+									<header>
+										<h2><a href="{{ post.relative_path }}" class="bN"
+											   data-beacon='{{ mv_macro.attr(post.id, post|mv.beacon('post_title')) }}'
+													>{{ post|mv.post_title|default(post.title) }}</a></h2>
+									</header>
+									<p>
+										By <strong>{{ post.contributor.byline|default('Unknown Author') }}</strong><br />
+										<em>{{ post.published|date('M j, Y') }}</em>
+									</p>
+								</div>
+							</section>
+						</div>
+					{% endfor %}
+				{% endif %}
+
+			</div>
+		</div>
+	</div>
+
+	<div id="features-wrapper">
+		<div class="container" style="text-align: center;">
+
+			{% set base_url = req.path|regex_replace('~/page/[0-9]+~', '')|trim('/') %}
+			{% set prev_page = posts.page > 1
+				? "/#{base_url}/page/#{posts.page - 1}/" : null %}
+			{% set next_page = posts.page < posts.total_pages
+				? "/#{base_url}/page/#{posts.page + 1}/" : null %}
+
+			<a href="{{ prev_page|default('#') }}"
+				 class="{{ prev_page ? '' : 'disabled' }} button icon fa-arrow-circle-left"
+				 title="Previous Page"></a>
+			<a href="{{ next_page|default('#') }}"
+				 class="{{ next_page ? '' : 'disabled' }} button icon fa-arrow-circle-right"
+				 title="Next Page"></a>
+		</div>
+	</div>
+	{{ mv_macro.config() }}
+	{{ mv_macro.ping() }}
+{% endblock %}
