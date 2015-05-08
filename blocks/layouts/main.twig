@@ -36,9 +36,6 @@
 			{% include '@blocks/modules/nav.twig' %}
 		{% endblock nav %}
 
-		{% block featuredcontent %}
-			{% include '@blocks/modules/featuredcontent.twig' %}
-		{% endblock featuredcontent %}
 		<!-- Nav -->
 		
 	</header>
@@ -46,6 +43,10 @@
 
 
 <div>
+	{% block featuredcontent %}
+		{% include '@blocks/modules/featuredcontent.twig' %}
+	{% endblock featuredcontent %}
+
 	{% block main %}{% endblock %}
 </div>
 
