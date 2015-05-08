@@ -15,11 +15,9 @@
 		{% set featured_content_teaser_description = topArticle.contents}truncate(100) %}
 		{% set  featured_content_permalink = topArticle.url %}
 
-		{% include '@blocks/modules/featuredcontent.twig' %}
+		{{ parent() }}
 	{% endfor %}
 
-
-	
 {% endblock featuredcontent %}
 
 {% block main %}

@@ -3,7 +3,6 @@
 {% block body_class %}homepage{% endblock %}
 
 {% block featuredcontent %}
-	{% block featuredcontent %}
 	{%
 		set homeZone = api.posts.query({
 			zone: 'Home Page Featured Content Zone'
@@ -18,12 +17,9 @@
 		{% set featured_content_teaser_description = topContent.template_data.some_custom_description_field %}
 		{% set featured_content_permalink = topContent.template_data.some_custom_url_field %}
 
-		{% include '@blocks/modules/featuredcontent.twig' %}
+		{{ parent() }}
 	{% endfor %}
 
-
-	
-{% endblock featuredcontent %}
 {% endblock featuredcontent %}
 
 {% block main %}
